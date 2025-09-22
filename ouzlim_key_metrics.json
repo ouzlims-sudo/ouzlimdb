@@ -1,0 +1,50 @@
+{
+  "throwing_metrics": [
+    "Total throws per session",
+    "Throws by intensity (weak 50-80%, moderate 80-90%, maximum 90%+)",
+    "Throws by implement weight (3kg, 4kg, 5kg for women; 6kg, 7.26kg, 8kg for men)",
+    "Average throw distance",
+    "Technical rating per throw",
+    "Release velocity",
+    "Release angle",
+    "Release height"
+  ],
+  "load_management_metrics": [
+    "Session RPE (Rate of Perceived Exertion)",
+    "Training duration",
+    "Acute:Chronic workload ratio",
+    "Training monotony",
+    "Training strain",
+    "Weekly throw count",
+    "Monthly throw count",
+    "Strength training volume (tons)",
+    "Recovery metrics"
+  ],
+  "wellness_indicators": [
+    "Sleep quality and duration",
+    "Fatigue levels",
+    "Muscle soreness",
+    "Stress levels",
+    "Mood and motivation",
+    "Readiness to train",
+    "Heart rate variability",
+    "Resting heart rate",
+    "Menstrual cycle phase (for female athletes)"
+  ],
+  "performance_benchmarks": [
+    "30m sprint time",
+    "Standing long jump",
+    "Standing triple jump",
+    "4kg shot put throws (backward and forward)",
+    "Bench press maximum",
+    "Squat maximum",
+    "Competition performance",
+    "Technical skill ratings"
+  ],
+  "bondarchuk_exercise_categories": [
+    "General Preparatory Exercises (running, general strength)",
+    "Special Preparatory Exercises (specific strength, jumping)",
+    "Special Development Exercises (weighted implements, specific movements)",
+    "Competitive Exercises (competition weight throwing)"
+  ]
+}

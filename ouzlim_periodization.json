@@ -1,0 +1,44 @@
+{
+  "annual_planning": {
+    "preparation_phase": {
+      "duration": "October - February",
+      "focus": "Building general and special strength",
+      "volume": "High volume, moderate intensity",
+      "key_activities": [
+        "High volume strength training",
+        "Technical development with lighter implements",
+        "General conditioning",
+        "Imitation exercises"
+      ]
+    },
+    "pre_competition_phase": {
+      "duration": "March - April",
+      "focus": "Transition to competition preparation",
+      "volume": "Peak volume in special strength and throwing",
+      "key_activities": [
+        "Maximum special strength training",
+        "Increased competition weight throwing",
+        "Technical refinement",
+        "Speed development"
+      ]
+    },
+    "competition_phase": {
+      "duration": "May - September",
+      "focus": "Peak performance and competition",
+      "volume": "Reduced volume, high intensity",
+      "key_activities": [
+        "Competition simulation",
+        "Technical maintenance",
+        "Peak maintenance protocols",
+        "Recovery optimization"
+      ]
+    }
+  },
+  "bondarchuk_complex_periodization": {
+    "concept": "Work on all 4 exercise categories simultaneously",
+    "period_length": "4-8 weeks typically",
+    "exercise_changes": "70-80% of exercises change between periods",
+    "daily_consistency": "Same exercises performed daily during each period",
+    "adaptation_monitoring": "Change program when personal records plateau"
+  }
+}

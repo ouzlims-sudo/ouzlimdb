@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUZLIM DB MANAGEMENT - Hammer Throw Training System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">OUZLIM DB MANAGEMENT</h1>
+                <div class="athlete-selector">
+                    <label class="form-label">Current Athlete:</label>
+                    <select id="athleteSelect" class="form-control athlete-select">
+                        <option value="">Select Athlete</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn active" data-module="dashboard">Dashboard</button>
+            <button class="nav-btn" data-module="athletes">Athletes</button>
+            <button class="nav-btn" data-module="training">Training</button>
+            <button class="nav-btn" data-module="wellness">Wellness</button>
+            <button class="nav-btn" data-module="testing">Testing</button>
+            <button class="nav-btn" data-module="analytics">Analytics</button>
+            <button class="nav-btn" data-module="periodization">Periodization</button>
+            <button class="nav-btn" data-module="reports">Reports</button>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Module -->
+            <div id="dashboard" class="module active">
+                <div class="module-header">
+                    <h2>Dashboard Overview</h2>
+                    <p class="module-subtitle">Real-time athlete performance and training load monitoring</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Quick Stats -->
+                    <div class="dashboard-card">
+                        <h3>Quick Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="recentThrows">--</div>
+                                <div class="stat-label">Recent Throws</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="trainingLoad">--</div>
+                                <div class="stat-label">Training Load</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="wellnessScore">--</div>
+                                <div class="stat-label">Wellness Score</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="riskLevel">--</div>
+                                <div class="stat-label">Risk Level</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Training Load Chart -->
+                    <div class="dashboard-card">
+                        <h3>Weekly Training Load</h3>
+                        <div class="chart-container" style="position: relative; height: 250px;">
+                            <canvas id="trainingLoadChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Performance Trend -->
+                    <div class="dashboard-card">
+                        <h3>Performance Trend</h3>
+                        <div class="chart-container" style="position: relative; height: 250px;">
+                            <canvas id="performanceTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Risk Alerts -->
+                    <div class="dashboard-card">
+                        <h3>Risk Alerts & Notifications</h3>
+                        <div id="riskAlerts" class="alerts-container">
+                            <div class="alert alert-info">
+                                <span class="alert-icon">ℹ</span>
+                                <span>Select an athlete to view personalized alerts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Athletes Module -->
+            <div id="athletes" class="module">
+                <div class="module-header">
+                    <h2>Athlete Management</h2>
+                    <button class="btn btn--primary" id="addAthleteBtn">Add New Athlete</button>
+                </div>
+
+                <div class="athletes-grid" id="athletesList">
+                    <!-- Athletes will be populated by JavaScript -->
+                </div>
+
+                <!-- Add/Edit Athlete Modal -->
+                <div id="athleteModal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="modalTitle">Add New Athlete</h3>
+                            <button class="modal-close" id="closeModal">&times;</button>
+                        </div>
+                        <form id="athleteForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" id="firstName" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" id="lastName" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Date of Birth</label>
+                                    <input type="date" id="dateOfBirth" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Gender</label>
+                                    <select id="gender" class="form-control" required>
+                                        <option value="">Select...</option>
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Weight (kg)</label>
+                                    <input type="number" id="weight" class="form-control" step="0.1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Height (cm)</label>
+                                    <input type="number" id="height" class="form-control" step="0.1" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Competition Level</label>
+                                    <select id="competitionLevel" class="form-control" required>
+                                        <option value="">Select...</option>
+                                        <option value="junior">Junior</option>
+                                        <option value="senior">Senior</option>
+                                        <option value="masters">Masters</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Personal Best (m)</label>
+                                    <input type="number" id="personalBest" class="form-control" step="0.01">
+                                </div>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn--secondary" id="cancelBtn">Cancel</button>
+                                <button type="submit" class="btn btn--primary">Save Athlete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Module -->
+            <div id="training" class="module">
+                <div class="module-header">
+                    <h2>Training Session Logging</h2>
+                    <button class="btn btn--primary" id="addSessionBtn">Log New Session</button>
+                </div>
+
+                <div class="training-content">
+                    <div class="sessions-list" id="sessionsList">
+                        <!-- Sessions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Training Session Modal -->
+                <div id="sessionModal" class="modal hidden">
+                    <div class="modal-content large">
+                        <div class="modal-header">
+                            <h3>Log Training Session</h3>
+                            <button class="modal-close" id="closeSessionModal">&times;</button>
+                        </div>
+                        <form id="sessionForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" id="sessionDate" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Session Type</label>
+                                    <select id="sessionType" class="form-control" required>
+                                        <option value="">Select...</option>
+                                        <option value="technical">Technical</option>
+                                        <option value="strength">Strength</option>
+                                        <option value="conditioning">Conditioning</option>
+                                        <option value="competition">Competition</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Duration (minutes)</label>
+                                    <input type="number" id="duration" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="exercise-section">
+                                <h4>Exercises</h4>
+                                <div id="exercisesList">
+                                    <div class="exercise-entry">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Exercise</label>
+                                                <select class="exercise-select form-control" required>
+                                                    <option value="">Select Exercise...</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Sets/Throws</label>
+                                                <input type="number" class="exercise-sets form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Reps/Distance</label>
+                                                <input type="text" class="exercise-reps form-control" placeholder="e.g. 10 or 45.2m" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Weight/Intensity</label>
+                                                <input type="text" class="exercise-weight form-control" placeholder="e.g. 100kg or RPE 8">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn--secondary" id="addExerciseBtn">Add Exercise</button>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Session RPE (1-10)</label>
+                                    <input type="number" id="sessionRPE" class="form-control" min="1" max="10" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Enjoyment (1-5)</label>
+                                    <input type="number" id="enjoyment" class="form-control" min="1" max="5">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Notes</label>
+                                <textarea id="sessionNotes" class="form-control" rows="3"></textarea>
+                            </div>
+
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn--secondary" id="cancelSessionBtn">Cancel</button>
+                                <button type="submit" class="btn btn--primary">Save Session</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wellness Module -->
+            <div id="wellness" class="module">
+                <div class="module-header">
+                    <h2>Wellness Monitoring</h2>
+                    <button class="btn btn--primary" id="addWellnessBtn">Log Daily Wellness</button>
+                </div>
+
+                <div class="wellness-content">
+                    <div class="wellness-chart-container">
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="wellnessChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wellness Modal -->
+                <div id="wellnessModal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Daily Wellness Check</h3>
+                            <button class="modal-close" id="closeWellnessModal">&times;</button>
+                        </div>
+                        <form id="wellnessForm">
+                            <div class="form-group">
+                                <label class="form-label">Date</label>
+                                <input type="date" id="wellnessDate" class="form-control" required>
+                            </div>
+
+                            <div class="wellness-ratings">
+                                <div class="rating-group">
+                                    <label class="form-label">Sleep Quality (1-5)</label>
+                                    <div class="rating-buttons">
+                                        <input type="radio" name="sleepQuality" value="1" id="sleep1" required>
+                                        <label for="sleep1">1</label>
+                                        <input type="radio" name="sleepQuality" value="2" id="sleep2">
+                                        <label for="sleep2">2</label>
+                                        <input type="radio" name="sleepQuality" value="3" id="sleep3">
+                                        <label for="sleep3">3</label>
+                                        <input type="radio" name="sleepQuality" value="4" id="sleep4">
+                                        <label for="sleep4">4</label>
+                                        <input type="radio" name="sleepQuality" value="5" id="sleep5">
+                                        <label for="sleep5">5</label>
+                                    </div>
+                                </div>
+
+                                <div class="rating-group">
+                                    <label class="form-label">Fatigue Level (1-5)</label>
+                                    <div class="rating-buttons">
+                                        <input type="radio" name="fatigue" value="1" id="fatigue1" required>
+                                        <label for="fatigue1">1</label>
+                                        <input type="radio" name="fatigue" value="2" id="fatigue2">
+                                        <label for="fatigue2">2</label>
+                                        <input type="radio" name="fatigue" value="3" id="fatigue3">
+                                        <label for="fatigue3">3</label>
+                                        <input type="radio" name="fatigue" value="4" id="fatigue4">
+                                        <label for="fatigue4">4</label>
+                                        <input type="radio" name="fatigue" value="5" id="fatigue5">
+                                        <label for="fatigue5">5</label>
+                                    </div>
+                                </div>
+
+                                <div class="rating-group">
+                                    <label class="form-label">Soreness (1-5)</label>
+                                    <div class="rating-buttons">
+                                        <input type="radio" name="soreness" value="1" id="soreness1" required>
+                                        <label for="soreness1">1</label>
+                                        <input type="radio" name="soreness" value="2" id="soreness2">
+                                        <label for="soreness2">2</label>
+                                        <input type="radio" name="soreness" value="3" id="soreness3">
+                                        <label for="soreness3">3</label>
+                                        <input type="radio" name="soreness" value="4" id="soreness4">
+                                        <label for="soreness4">4</label>
+                                        <input type="radio" name="soreness" value="5" id="soreness5">
+                                        <label for="soreness5">5</label>
+                                    </div>
+                                </div>
+
+                                <div class="rating-group">
+                                    <label class="form-label">Stress Level (1-5)</label>
+                                    <div class="rating-buttons">
+                                        <input type="radio" name="stress" value="1" id="stress1" required>
+                                        <label for="stress1">1</label>
+                                        <input type="radio" name="stress" value="2" id="stress2">
+                                        <label for="stress2">2</label>
+                                        <input type="radio" name="stress" value="3" id="stress3">
+                                        <label for="stress3">3</label>
+                                        <input type="radio" name="stress" value="4" id="stress4">
+                                        <label for="stress4">4</label>
+                                        <input type="radio" name="stress" value="5" id="stress5">
+                                        <label for="stress5">5</label>
+                                    </div>
+                                </div>
+
+                                <div class="rating-group">
+                                    <label class="form-label">Mood (1-5)</label>
+                                    <div class="rating-buttons">
+                                        <input type="radio" name="mood" value="1" id="mood1" required>
+                                        <label for="mood1">1</label>
+                                        <input type="radio" name="mood" value="2" id="mood2">
+                                        <label for="mood2">2</label>
+                                        <input type="radio" name="mood" value="3" id="mood3">
+                                        <label for="mood3">3</label>
+                                        <input type="radio" name="mood" value="4" id="mood4">
+                                        <label for="mood4">4</label>
+                                        <input type="radio" name="mood" value="5" id="mood5">
+                                        <label for="mood5">5</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Readiness to Train (1-10)</label>
+                                <input type="range" id="readiness" class="form-control" min="1" max="10" value="5">
+                                <div class="range-value">5</div>
+                            </div>
+
+                            <div class="modal-actions">
+                                <button type="button" class="btn btn--secondary" id="cancelWellnessBtn">Cancel</button>
+                                <button type="submit" class="btn btn--primary">Save Wellness Data</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testing Module -->
+            <div id="testing" class="module">
+                <div class="module-header">
+                    <h2>Performance Testing</h2>
+                    <button class="btn btn--primary" id="addTestBtn">Log Test Results</button>
+                </div>
+
+                <div class="testing-content">
+                    <div id="testingResults">
+                        <!-- Test results will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Module -->
+            <div id="analytics" class="module">
+                <div class="module-header">
+                    <h2>Load Management Analytics</h2>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Acute vs Chronic Workload</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="acuteChronicChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Training Monotony & Strain</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="monotonyChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <h3>Injury Risk Score</h3>
+                        <div class="risk-gauge">
+                            <canvas id="riskGauge" width="200" height="200"></canvas>
+                            <div class="risk-score" id="currentRiskScore">Low Risk</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Periodization Module -->
+            <div id="periodization" class="module">
+                <div class="module-header">
+                    <h2>Periodization Planning</h2>
+                    <button class="btn btn--primary" id="addPeriodBtn">Create Training Period</button>
+                </div>
+
+                <div class="periodization-content">
+                    <div id="periodsTimeline">
+                        <!-- Training periods timeline will be shown here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Module -->
+            <div id="reports" class="module">
+                <div class="module-header">
+                    <h2>Reports & Analytics</h2>
+                    <div class="report-controls">
+                        <select id="reportType" class="form-control">
+                            <option value="performance">Performance Summary</option>
+                            <option value="load">Load Management Report</option>
+                            <option value="wellness">Wellness Analysis</option>
+                            <option value="risk">Risk Assessment</option>
+                        </select>
+                        <button class="btn btn--primary" id="generateReportBtn">Generate Report</button>
+                        <button class="btn btn--secondary" id="exportReportBtn">Export PDF</button>
+                    </div>
+                </div>
+
+                <div class="report-content" id="reportContent">
+                    <div class="report-placeholder">
+                        <p>Select a report type and click "Generate Report" to view analysis</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
