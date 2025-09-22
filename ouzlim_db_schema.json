@@ -28,6 +28,9 @@
     "session_enjoyment": "DECIMAL(3,1) (0-10 scale)",
     "notes": "TEXT",
     "created_at": "TIMESTAMP"
+      "created_at": "TIMESTAMP",
+    "updated_at": "TIMESTAMP",
+    "active": "BOOLEAN"
   },
   "throwing_data": {
     "throw_id": "UUID (Primary Key)",
